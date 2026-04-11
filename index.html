@@ -6,1182 +6,797 @@
     <title>Larissa Martins - Psicóloga Infantil</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --verde-principal: #6B8E3F;
-            --verde-claro: #8FBC5A;
-            --verde-escuro: #4A6B2A;
-            --rosa-principal: #D4A5C6;
-            --rosa-claro: #E8C4DD;
-            --rosa-escuro: #B88DAC;
-            --roxo-accent: #9B7AA8;
-            --bege-claro: #F9F6F2;
-            --cinza-suave: #7A7A7A;
+            --verde: #5C7A36;
+            --verde-claro: #79A846;
+            --verde-escuro: #3E5626;
+            --verde-mint: #EBF5E0;
+            --rosa: #C98DBB;
+            --rosa-claro: #F2DCED;
+            --rosa-suave: #FDF5FB;
+            --bege: #FAF8F5;
+            --cinza: #6B7280;
+            --texto: #1F2937;
             --branco: #FFFFFF;
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--branco);
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            color: var(--texto);
+            background: var(--branco);
             overflow-x: hidden;
-            line-height: 1.6;
             cursor: none;
         }
-        
-        /* Show default cursor on touch devices */
+
         @media (hover: none) {
-            body {
-                cursor: auto;
-            }
-            .cursor, .cursor-follower {
-                display: none;
-            }
-        }
-        
-        /* Ensure clickable elements show pointer */
-        a, button, .menu-item, .service-card, .contact-method {
-            cursor: pointer;
+            body { cursor: auto; }
+            .cursor, .cursor-follower { display: none; }
         }
 
-        /* Custom Cursor */
+        a, button, .menu-item { cursor: pointer; }
+
+        /* Cursor */
         .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--rosa-principal);
+            width: 10px; height: 10px;
+            background: var(--rosa);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            transition: all 0.1s ease;
             z-index: 9999;
             transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
         }
-
         .cursor-follower {
-            width: 40px;
-            height: 40px;
-            background: rgba(212, 165, 198, 0.1);
+            width: 34px; height: 34px;
+            border: 2px solid var(--rosa);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            transition: all 0.3s ease;
             z-index: 9998;
             transform: translate(-50%, -50%);
+            transition: all 0.22s ease;
+            opacity: 0.45;
         }
-
-        .cursor.hover {
-            transform: translate(-50%, -50%) scale(2);
-            background: rgba(212, 165, 198, 0.2);
-            border-color: var(--verde-principal);
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -2;
-            background: linear-gradient(135deg, var(--bege-claro) 0%, #fff 100%);
-        }
-
-        .bg-bubble {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            animation: float-bubble 20s infinite ease-in-out;
-        }
-
-        .bubble-1 {
-            width: 600px;
-            height: 600px;
-            background: var(--verde-claro);
-            top: -300px;
-            left: -200px;
-        }
-
-        .bubble-2 {
-            width: 500px;
-            height: 500px;
-            background: var(--rosa-claro);
-            bottom: -250px;
-            right: -150px;
-            animation-delay: -7s;
-        }
-
-        .bubble-3 {
-            width: 400px;
-            height: 400px;
-            background: var(--roxo-accent);
-            top: 50%;
-            left: 50%;
-            animation-delay: -14s;
-        }
-
-        @keyframes float-bubble {
-            0%, 100% { 
-                transform: translate(0, 0) scale(1) rotate(0deg);
-            }
-            25% { 
-                transform: translate(100px, -100px) scale(1.1) rotate(90deg);
-            }
-            50% { 
-                transform: translate(-50px, 50px) scale(0.9) rotate(180deg);
-            }
-            75% { 
-                transform: translate(-100px, -50px) scale(1.05) rotate(270deg);
-            }
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--branco);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-
-        .loader-circle {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 4px solid transparent;
-            border-top-color: var(--verde-principal);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .loader-circle:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 10px;
-            left: 10px;
-            border-top-color: var(--rosa-principal);
-            animation-duration: 0.8s;
-            animation-direction: reverse;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            cursor: pointer;
-        }
-
-        .logo-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container:hover .logo-img {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .logo-text h1 {
-            font-size: 24px;
-            color: var(--verde-escuro);
-            font-weight: 700;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .logo-text p {
-            font-size: 14px;
-            color: var(--rosa-escuro);
-            margin: 0;
-        }
-
-        /* Animated Menu Button */
-        .menu-btn {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--rosa-principal), var(--verde-principal));
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .menu-btn:hover::before {
-            width: 100px;
-            height: 100px;
-        }
-
-        .menu-btn span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .menu-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -450px;
-            width: 450px;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(232, 196, 221, 0.1));
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 999;
-            overflow-y: auto;
-        }
-
-        .sidebar.active {
-            right: 0;
-        }
-
-        .sidebar-content {
-            padding: 80px 40px 40px;
-        }
-
-        .menu-item {
-            padding: 20px 30px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--verde-claro), var(--rosa-claro));
-            transition: left 0.3s ease;
-            z-index: -1;
-        }
-
-        .menu-item:hover::before {
-            left: 0;
-        }
-
-        .menu-item:hover {
-            transform: translateX(10px);
-            color: var(--verde-escuro);
-        }
-
-        .menu-item i {
-            font-size: 20px;
-            color: var(--verde-principal);
-            transition: all 0.3s ease;
-        }
-
-        .menu-item:hover i {
-            color: var(--verde-escuro);
-            transform: scale(1.2);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 120px 20px 80px;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            z-index: 1;
-        }
-
-        .hero-text {
-            animation: fadeInLeft 1s ease;
-        }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, rgba(107, 142, 63, 0.1), rgba(212, 165, 198, 0.1));
-            padding: 10px 25px;
-            border-radius: 50px;
-            margin-bottom: 30px;
-            border: 1px solid var(--verde-claro);
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .hero-badge i {
-            color: var(--verde-principal);
-            font-size: 20px;
-        }
-
-        .hero h1 {
-            font-size: clamp(40px, 5vw, 60px);
-            color: var(--verde-escuro);
-            margin-bottom: 20px;
-            font-weight: 800;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.2;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--verde-principal), var(--rosa-principal));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            animation: gradient-shift 3s ease infinite;
-        }
-
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero-description {
-            font-size: 20px;
-            color: var(--cinza-suave);
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--rosa-principal), var(--rosa-escuro));
-            color: white;
-            box-shadow: 0 10px 30px rgba(212, 165, 198, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(212, 165, 198, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--verde-principal);
-            border: 2px solid var(--verde-principal);
-        }
-
-        .btn-secondary:hover {
-            background: var(--verde-principal);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(107, 142, 63, 0.3);
-        }
-
-        /* Hero Image */
-        .hero-image {
-            position: relative;
-            animation: fadeInRight 1s ease;
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .image-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .hero-photo {
-            width: 100%;
-            height: auto;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .image-container:hover .hero-photo {
-            transform: scale(1.05);
-        }
-
-        .floating-card {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .card-1 {
-            top: 20px;
-            right: -50px;
-            animation-delay: 0s;
-        }
-
-        .card-2 {
-            bottom: 50px;
-            left: -30px;
-            animation-delay: 1s;
-        }
-
-        .floating-card i {
-            font-size: 24px;
-            color: var(--verde-principal);
-            margin-bottom: 10px;
-        }
-
-        .floating-card h4 {
-            font-size: 16px;
-            color: var(--verde-escuro);
-            margin: 0;
-        }
-
-        .floating-card p {
-            font-size: 14px;
-            color: var(--cinza-suave);
-            margin: 5px 0 0;
-        }
-
-        /* About Section */
-        .about {
-            padding: 100px 20px;
-            background: linear-gradient(135deg, rgba(107, 142, 63, 0.03), rgba(212, 165, 198, 0.03));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--rosa-claro), transparent);
-            opacity: 0.3;
-            filter: blur(100px);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .section-label {
-            display: inline-block;
-            padding: 8px 20px;
-            background: var(--verde-claro);
-            color: white;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-header h2 {
-            font-size: clamp(32px, 4vw, 48px);
-            color: var(--verde-escuro);
-            margin-bottom: 20px;
-            font-weight: 700;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .section-header p {
-            font-size: 18px;
-            color: var(--cinza-suave);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* Timeline */
-        .timeline {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            padding: 40px 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--verde-claro), var(--rosa-claro));
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding: 40px;
-            width: calc(50% - 40px);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.6s ease;
-        }
-
-        .timeline-item.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(odd) {
-            margin-left: auto;
-            text-align: left;
-        }
-
-        .timeline-item:nth-child(even) {
-            margin-right: auto;
-            text-align: right;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--verde-principal);
-            border: 4px solid white;
-            border-radius: 50%;
-            top: 50px;
-            box-shadow: 0 5px 20px rgba(107, 142, 63, 0.3);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-dot {
-            left: -10px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-dot {
-            right: -10px;
-        }
-
-        .timeline-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-        }
-
-        .timeline-content h3 {
-            font-size: 22px;
-            color: var(--verde-escuro);
-            margin-bottom: 10px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .timeline-content p {
-            color: var(--cinza-suave);
-            line-height: 1.6;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 100px 20px;
-            background: white;
-            position: relative;
-        }
-
-        .services-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(232, 196, 221, 0.1));
-            border: 1px solid rgba(212, 165, 198, 0.2);
-            padding: 40px;
-            border-radius: 30px;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(107, 142, 63, 0.1), transparent);
-            transition: all 0.6s ease;
-        }
-
-        .service-card:hover::before {
-            top: -50%;
-            left: -50%;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            border-color: var(--verde-claro);
-        }
-
-        .service-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 30px;
-            background: linear-gradient(135deg, var(--verde-claro), var(--rosa-claro));
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: white;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover .service-icon {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            color: var(--verde-escuro);
-            margin-bottom: 15px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-        }
-
-        .service-card p {
-            color: var(--cinza-suave);
-            line-height: 1.8;
-            font-size: 16px;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 100px 20px;
-            background: white;
-            position: relative;
-        }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .contact-info h3 {
-            font-size: 36px;
-            color: var(--verde-escuro);
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .contact-info p {
-            font-size: 18px;
-            color: var(--cinza-suave);
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-
-        .contact-methods {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .contact-method {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(107, 142, 63, 0.05), rgba(212, 165, 198, 0.05));
-            border-radius: 20px;
-            text-decoration: none;
-            color: var(--verde-escuro);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .contact-method:hover {
-            transform: translateX(10px);
-            border-color: var(--verde-claro);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-method i {
-            font-size: 28px;
-            color: var(--rosa-principal);
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .contact-method:hover i {
-            background: var(--rosa-principal);
-            color: white;
-            transform: rotate(360deg);
-        }
-
-        .contact-method-info h4 {
-            font-size: 20px;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .contact-method-info p {
-            font-size: 16px;
-            color: var(--cinza-suave);
-            margin: 0;
-        }
-
-        /* Contact Form */
-        .contact-form {
-            background: linear-gradient(135deg, rgba(232, 196, 221, 0.1), rgba(107, 142, 63, 0.05));
-            padding: 50px;
-            border-radius: 30px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 16px;
-            color: var(--verde-escuro);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid transparent;
-            border-radius: 15px;
-            font-size: 16px;
-            background: white;
-            transition: all 0.3s ease;
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--verde-claro);
-            box-shadow: 0 5px 20px rgba(107, 142, 63, 0.1);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--verde-principal), var(--verde-claro));
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(107, 142, 63, 0.3);
-        }
-
-        /* Footer */
-        .footer {
-            padding: 50px 20px 30px;
-            background: var(--verde-escuro);
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(212, 165, 198, 0.1), transparent);
-            pointer-events: none;
-        }
-
-        .footer-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .footer-text {
-            font-size: 16px;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-links a {
-            color: white;
-            font-size: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            transform: translateY(-5px) scale(1.2);
-            color: var(--rosa-claro);
-        }
-
-        .footer-copy {
-            font-size: 14px;
-            opacity: 0.7;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 998;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .cursor.hover { transform: translate(-50%, -50%) scale(2.5); background: var(--verde-claro); }
 
         /* Scroll Progress */
         .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--verde-principal), var(--rosa-principal));
+            position: fixed; top: 0; left: 0;
+            height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--verde-claro), var(--rosa));
             z-index: 1001;
-            transition: width 0.3s ease;
         }
 
-        /* Back to Top */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--rosa-principal), var(--verde-principal));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
+        /* Loading */
+        .loading-screen {
+            position: fixed; inset: 0;
+            background: var(--branco);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 20px;
+            z-index: 10000;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loader-logo {
+            width: 72px; height: 72px;
+            border-radius: 50%; object-fit: cover;
+            animation: pulse-logo 1.4s ease-in-out infinite;
+        }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .loader-bar {
+            width: 180px; height: 3px;
+            background: var(--rosa-claro); border-radius: 99px; overflow: hidden;
+        }
+        .loader-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde-claro), var(--rosa));
+            animation: load-bar 1.5s ease forwards;
+        }
+        @keyframes load-bar { from { width: 0 } to { width: 100% } }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; width: 100%;
+            z-index: 1000;
+            transition: all 0.35s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.93);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
+        }
+        .navbar-content {
+            max-width: 1280px; margin: 0 auto;
+            padding: 18px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo-container {
+            display: flex; align-items: center; gap: 14px;
+            text-decoration: none; cursor: pointer;
+        }
+        .logo-img {
+            width: 50px; height: 50px;
+            border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--rosa-claro);
+            transition: border-color 0.3s ease;
+        }
+        .logo-container:hover .logo-img { border-color: var(--rosa); }
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 19px; font-weight: 700;
+            color: var(--verde-escuro); line-height: 1.1;
+        }
+        .logo-text p { font-size: 12px; color: var(--rosa); font-weight: 500; }
+
+        .menu-btn {
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, var(--rosa), var(--verde));
+            border: none; border-radius: 14px; cursor: pointer;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 5px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(201,141,187,0.3);
+        }
+        .menu-btn:hover { transform: scale(1.06); }
+        .menu-btn span {
+            width: 22px; height: 2px;
+            background: white; border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Overlay */
+        .overlay {
+            position: fixed; inset: 0;
+            background: rgba(20,20,30,0.5);
+            backdrop-filter: blur(4px);
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease; z-index: 998;
+        }
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; right: -440px;
+            width: 400px; height: 100vh;
+            background: var(--branco);
+            box-shadow: -4px 0 40px rgba(0,0,0,0.08);
+            transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+            z-index: 999; overflow-y: auto;
+        }
+        .sidebar.active { right: 0; }
+        .sidebar-header {
+            padding: 28px 36px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .sidebar-header img {
+            width: 46px; height: 46px;
+            border-radius: 50%; object-fit: cover;
+        }
+        .sidebar-header-text h3 { font-size: 16px; font-weight: 600; color: var(--verde-escuro); }
+        .sidebar-header-text p { font-size: 12px; color: var(--rosa); }
+        .sidebar-nav { padding: 20px 20px 0; }
+        .sidebar-section-label {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: var(--cinza); padding: 0 12px; margin-bottom: 8px;
+        }
+        .menu-item {
+            padding: 13px 16px; margin-bottom: 4px;
+            border-radius: 14px; cursor: pointer;
+            display: flex; align-items: center; gap: 14px;
+            transition: all 0.2s ease;
+            color: var(--texto); font-weight: 500; font-size: 15px;
+        }
+        .menu-item:hover {
+            background: var(--bege); color: var(--verde-escuro);
+            transform: translateX(4px);
+        }
+        .menu-item .m-icon {
+            width: 36px; height: 36px;
+            background: var(--verde-mint); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; color: var(--verde); flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .menu-item:hover .m-icon { background: var(--verde); color: white; }
+        .sidebar-cta {
+            margin: 24px 20px 28px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--verde-mint), var(--rosa-claro));
+            border-radius: 20px; text-align: center;
+        }
+        .sidebar-cta p { font-size: 14px; color: var(--cinza); margin-bottom: 14px; }
+        .sidebar-cta a {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white; border-radius: 99px;
+            text-decoration: none; font-size: 14px; font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        .sidebar-cta a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,211,102,0.3); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 120px 40px 80px;
+            position: relative; overflow: hidden;
+            background: var(--bege);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(121,168,70,0.11) 0%, transparent 70%);
+            top: -200px; right: -200px; border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(201,141,187,0.13) 0%, transparent 70%);
+            bottom: -100px; left: -100px; border-radius: 50%;
+        }
+        .hero-content {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+            position: relative; z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: white; border: 1.5px solid var(--verde-mint);
+            padding: 8px 20px; border-radius: 99px;
+            font-size: 13px; font-weight: 600; color: var(--verde);
+            margin-bottom: 22px;
+            box-shadow: 0 4px 16px rgba(92,122,54,0.08);
+        }
+        .hero-badge i { color: var(--rosa); }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 4.5vw, 58px);
+            line-height: 1.15; color: var(--verde-escuro);
+            margin-bottom: 20px; font-weight: 700;
+        }
+        .hero h1 em {
+            font-style: italic; color: var(--rosa);
+        }
+        .hero-description {
+            font-size: 17px; line-height: 1.8;
+            color: var(--cinza); margin-bottom: 36px; max-width: 480px;
+        }
+        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn {
+            padding: 15px 30px; border-radius: 99px;
+            font-size: 15px; font-weight: 600;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 9px;
+            transition: all 0.3s ease; cursor: pointer;
+            font-family: 'Inter', sans-serif; border: none;
+        }
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+        }
+        .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(37,211,102,0.35); }
+        .btn-outline {
+            background: white; color: var(--verde);
+            border: 2px solid var(--verde-mint);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+        .btn-outline:hover { background: var(--verde-mint); border-color: var(--verde); transform: translateY(-3px); }
+
+        /* Hero image */
+        .hero-image { position: relative; }
+        .hero-photo-wrap {
+            position: relative; border-radius: 32px; overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.1);
+        }
+        .hero-photo-wrap::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent 55%, rgba(62,86,38,0.12));
+        }
+        .hero-photo {
+            width: 100%; height: 540px;
+            object-fit: cover; display: block;
+            transition: transform 0.6s ease;
+        }
+        .hero-photo-wrap:hover .hero-photo { transform: scale(1.04); }
+        .deco-ring {
+            position: absolute;
+            border: 3px dashed var(--rosa-claro);
+            border-radius: 50%;
+            animation: spin-slow 22s linear infinite;
+        }
+        .deco-ring-1 { width: 110px; height: 110px; top: -18px; left: -18px; }
+        .deco-ring-2 {
+            width: 72px; height: 72px; bottom: 44px; right: -16px;
+            border-color: var(--verde-mint);
+            animation-direction: reverse; animation-duration: 16s;
+        }
+        @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+        .floating-card {
+            position: absolute;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            padding: 14px 18px; border-radius: 18px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 12px;
+            z-index: 2; animation: float 4s ease-in-out infinite;
+        }
+        .card-1 { top: 28px; right: -28px; animation-delay: 0s; }
+        .card-2 { bottom: 60px; left: -28px; animation-delay: 1.5s; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .card-ic {
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+        .card-1 .card-ic { background: #FFF0F8; color: var(--rosa); }
+        .card-2 .card-ic { background: var(--verde-mint); color: var(--verde); }
+        .card-tx h4 { font-size: 13px; font-weight: 700; color: var(--texto); }
+        .card-tx p { font-size: 12px; color: var(--cinza); margin-top: 2px; }
+
+        /* ── STATS ── */
+        .stats {
+            background: white;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            padding: 48px 40px;
+        }
+        .stats-grid {
+            max-width: 860px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(4,1fr);
+            gap: 16px; text-align: center;
+        }
+        .stat-item {
+            padding: 22px 16px; border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .stat-item:hover { background: var(--bege); transform: translateY(-4px); }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px; font-weight: 700;
+            color: var(--verde-escuro); line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-num span { color: var(--rosa); }
+        .stat-lbl { font-size: 13px; color: var(--cinza); font-weight: 500; line-height: 1.5; }
+
+        /* ── SECTION COMMONS ── */
+        .section-label {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--verde); margin-bottom: 14px;
+        }
+        .section-label::before {
+            content: ''; width: 22px; height: 2px;
+            background: var(--verde-claro); border-radius: 99px;
+        }
+        .section-header { margin-bottom: 56px; }
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 3.5vw, 44px);
+            color: var(--verde-escuro); font-weight: 700;
+            line-height: 1.25; margin-bottom: 14px; max-width: 560px;
+        }
+        .section-header p { font-size: 17px; color: var(--cinza); max-width: 560px; line-height: 1.8; }
+
+        /* reveal */
+        .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── ABOUT ── */
+        .about { padding: 100px 40px; background: var(--bege); }
+        .about-inner { max-width: 1000px; margin: 0 auto; }
+
+        .timeline { position: relative; }
+        .timeline::before {
+            content: '';
+            position: absolute; left: 24px; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--verde-claro), var(--rosa-claro));
+        }
+        .timeline-item {
+            display: flex; gap: 28px;
+            margin-bottom: 32px;
+            opacity: 0; transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        .timeline-item.show { opacity: 1; transform: translateY(0); }
+        .tl-left { flex-shrink: 0; padding-top: 6px; }
+        .tl-dot {
+            width: 14px; height: 14px;
+            background: white; border: 3px solid var(--verde-claro);
+            border-radius: 50%; position: relative; z-index: 1;
+            transition: all 0.3s ease; margin-left: 18px;
+        }
+        .timeline-item:hover .tl-dot { background: var(--verde-claro); transform: scale(1.3); }
+        .tl-card {
+            flex: 1; background: white; padding: 26px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+        .tl-card:hover { box-shadow: 0 10px 36px rgba(0,0,0,0.08); transform: translateX(6px); }
+        .tl-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px; font-weight: 600;
+            color: var(--verde-escuro); margin-bottom: 8px;
+        }
+        .tl-card p { font-size: 15px; color: var(--cinza); line-height: 1.7; }
+
+        /* ── SERVICES ── */
+        .services { padding: 100px 40px; background: white; }
+        .services-inner { max-width: 1200px; margin: 0 auto; }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 22px;
+        }
+        .service-card {
+            padding: 34px; border-radius: 24px;
+            background: var(--bege); border: 1.5px solid transparent;
+            transition: all 0.35s ease;
+            opacity: 0; transform: translateY(22px);
+        }
+        .service-card.visible { opacity: 1; transform: translateY(0); }
+        .service-card:hover {
+            background: white; border-color: var(--verde-mint);
+            box-shadow: 0 16px 48px rgba(92,122,54,0.08);
+            transform: translateY(-6px);
+        }
+        .svc-icon {
+            width: 60px; height: 60px; border-radius: 16px;
+            background: var(--verde-mint);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; color: var(--verde);
+            margin-bottom: 22px; transition: all 0.3s ease;
+        }
+        .service-card:hover .svc-icon { background: var(--verde); color: white; transform: scale(1.08); }
+        .service-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px; font-weight: 600;
+            color: var(--verde-escuro); margin-bottom: 10px;
+        }
+        .service-card p { font-size: 14px; color: var(--cinza); line-height: 1.7; }
+
+        /* ── VALUES ── */
+        .values {
+            padding: 100px 40px;
+            background: linear-gradient(135deg, var(--verde-escuro) 0%, #4a6830 100%);
+            position: relative; overflow: hidden;
+        }
+        .values::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            top: -200px; right: -200px; border-radius: 50%;
+        }
+        .values-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+        .values .section-label { color: var(--rosa-claro); }
+        .values .section-label::before { background: var(--rosa-claro); }
+        .values .section-header h2 { color: white; }
+        .values .section-header p { color: rgba(255,255,255,0.72); }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+        }
+        .val-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 30px 26px; border-radius: 22px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .val-card:hover {
+            background: rgba(255,255,255,0.14);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.14);
+        }
+        .val-icon {
+            width: 58px; height: 58px; border-radius: 16px;
+            background: rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: var(--rosa-claro);
+            margin: 0 auto 18px;
+        }
+        .val-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px; font-weight: 600; color: white; margin-bottom: 10px;
+        }
+        .val-card p { font-size: 14px; color: rgba(255,255,255,0.68); line-height: 1.65; }
+
+        /* ── CONTACT ── */
+        .contact { padding: 100px 40px; background: var(--bege); }
+        .contact-inner { max-width: 1100px; margin: 0 auto; }
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 60px; align-items: start;
+        }
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px; color: var(--verde-escuro);
+            margin-bottom: 14px; font-weight: 700;
+        }
+        .contact-info > p {
+            font-size: 16px; color: var(--cinza);
+            line-height: 1.8; margin-bottom: 34px;
+        }
+        .contact-methods { display: flex; flex-direction: column; gap: 12px; }
+        .contact-method {
+            display: flex; align-items: center; gap: 16px;
+            padding: 18px 20px; background: white; border-radius: 16px;
+            text-decoration: none; color: var(--texto);
+            border: 1.5px solid transparent;
+            transition: all 0.25s ease;
+            opacity: 0; transform: translateY(14px);
+        }
+        .contact-method.visible { opacity: 1; transform: translateY(0); }
+        .contact-method:hover {
+            border-color: var(--verde-mint);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            transform: translateX(6px);
+        }
+        .cm-icon {
+            width: 46px; height: 46px; border-radius: 13px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0; transition: all 0.25s ease;
+        }
+        .contact-method:nth-child(1) .cm-icon { background: #E8FFF0; color: #25D366; }
+        .contact-method:nth-child(2) .cm-icon { background: #FFF0F8; color: #E1306C; }
+        .contact-method:nth-child(3) .cm-icon { background: #F0F4FF; color: #5B72FF; }
+        .contact-method:hover .cm-icon { transform: scale(1.1) rotate(-5deg); }
+        .cm-info h4 { font-size: 15px; font-weight: 600; color: var(--verde-escuro); }
+        .cm-info p { font-size: 13px; color: var(--cinza); }
+
+        .contact-form {
+            background: white; padding: 40px;
+            border-radius: 28px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .contact-form h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px; color: var(--verde-escuro); margin-bottom: 26px;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-size: 13px; font-weight: 600;
+            color: var(--verde-escuro); margin-bottom: 8px;
+        }
+        .form-control {
+            width: 100%; padding: 13px 17px;
+            border: 1.5px solid rgba(0,0,0,0.08); border-radius: 13px;
+            font-size: 15px; background: var(--bege);
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif; color: var(--texto);
+        }
+        .form-control:focus {
+            outline: none; border-color: var(--verde-claro); background: white;
+            box-shadow: 0 0 0 4px rgba(121,168,70,0.08);
+        }
+        textarea.form-control { resize: vertical; min-height: 108px; }
+        .btn-submit {
+            width: 100%; padding: 15px;
+            background: linear-gradient(135deg, var(--verde), var(--verde-claro));
+            color: white; border: none; border-radius: 13px;
+            font-size: 15px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; font-family: 'Inter', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(92,122,54,0.28); }
+
+        /* ── CTA BANNER ── */
+        .cta-banner { padding: 80px 40px; background: white; text-align: center; }
+        .cta-inner {
+            max-width: 680px; margin: 0 auto;
+            padding: 56px 40px;
+            background: linear-gradient(135deg, var(--verde-mint), var(--rosa-claro));
+            border-radius: 32px;
+        }
+        .cta-inner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(22px, 3vw, 34px);
+            color: var(--verde-escuro); margin-bottom: 14px;
+        }
+        .cta-inner p { font-size: 16px; color: var(--cinza); margin-bottom: 30px; line-height: 1.7; }
+
+        /* ── FOOTER ── */
+        .footer { background: var(--verde-escuro); color: white; padding: 60px 40px 28px; }
+        .footer-top {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+            gap: 56px;
+            padding-bottom: 44px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 28px;
+        }
+        .footer-brand img {
+            width: 52px; height: 52px; border-radius: 50%; margin-bottom: 16px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .footer-brand h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px; font-weight: 700; margin-bottom: 8px;
+        }
+        .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.58); line-height: 1.7; max-width: 250px; }
+        .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+        .footer-socials a {
+            width: 38px; height: 38px; border-radius: 11px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 17px; text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .footer-socials a:hover { background: rgba(255,255,255,0.16); transform: translateY(-3px); }
+        .footer-col h4 {
+            font-size: 12px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; color: rgba(255,255,255,0.45);
+            margin-bottom: 18px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.72); text-decoration: none;
+            font-size: 14px; transition: all 0.2s ease;
+        }
+        .footer-col ul li a:hover { color: white; padding-left: 4px; }
+        .footer-bottom {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 16px; flex-wrap: wrap;
+        }
+        .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
+        .footer-crp {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 6px 14px; background: rgba(255,255,255,0.06);
+            border-radius: 99px; font-size: 13px; color: rgba(255,255,255,0.55);
+        }
+
+        /* ── FLOATING WHATSAPP ── */
+        .wa-float {
+            position: fixed; bottom: 26px; right: 26px;
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 26px;
+            text-decoration: none;
+            box-shadow: 0 8px 28px rgba(37,211,102,0.4);
             z-index: 100;
+            animation: wa-pulse 2.5s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+        .wa-float:hover { transform: scale(1.12); animation: none; }
+        @keyframes wa-pulse {
+            0%,100% { box-shadow: 0 8px 28px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 8px 40px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.1); }
         }
 
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
+        /* ── BACK TO TOP ── */
+        .back-to-top {
+            position: fixed; bottom: 94px; right: 26px;
+            width: 42px; height: 42px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--verde); font-size: 17px; cursor: pointer;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease; z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1.5px solid var(--verde-mint);
         }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-4px); background: var(--verde); color: white; }
 
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .hero-content { gap: 48px; }
+            .contact-grid { gap: 36px; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+            .footer-brand { grid-column: 1 / -1; }
         }
-
-        /* Add smooth entrance animations */
-        .service-card, .timeline-item, .contact-method {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        
-        .service-card.visible, .timeline-item.show, .contact-method.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .hero-image {
-                margin-top: 40px;
-            }
-            
-            .timeline::before {
-                left: 30px;
-            }
-            
-            .timeline-item {
-                width: calc(100% - 80px);
-                margin-left: 60px !important;
-                text-align: left !important;
-            }
-            
-            .timeline-dot {
-                left: 20px !important;
-            }
-            
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-form {
-                padding: 30px;
-            }
-        }
-
         @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                right: -100%;
-            }
-            
-            .floating-card {
-                display: none;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
+            .navbar-content { padding: 14px 20px; }
+            .hero { padding: 96px 20px 56px; }
+            .hero-content { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .hero-description { margin: 0 auto 32px; }
+            .hero-buttons { justify-content: center; }
+            .hero-photo { height: 360px; }
+            .deco-ring, .floating-card { display: none; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .about, .services, .values, .contact, .cta-banner { padding: 64px 20px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-form { padding: 28px 22px; }
+            .footer-top { grid-template-columns: 1fr; gap: 28px; }
+            .footer { padding: 44px 20px 22px; }
+            .sidebar { width: 100%; right: -100%; }
+            .values-grid { grid-template-columns: 1fr 1fr; }
+            .cta-inner { padding: 40px 24px; }
+        }
+        @media (max-width: 480px) {
+            .values-grid, .services-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
+
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <div class="loader-circle"></div>
+    <div class="loading-screen" id="loading">
+        <img src="larissamartins_logo.jpeg" alt="Logo" class="loader-logo">
+        <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+    </div>
+
+    <div class="scroll-progress" id="scrollProg"></div>
+
+    <div class="overlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="larissamartins_logo.jpeg" alt="Logo">
+            <div class="sidebar-header-text">
+                <h3>Larissa Martins</h3>
+                <p>Psicóloga Infantil • CRP 04/74633</p>
+            </div>
+        </div>
+        <div class="sidebar-nav">
+            <div class="sidebar-section-label">Navegação</div>
+            <div class="menu-item" onclick="navigateTo('home')">
+                <div class="m-icon"><i class="fas fa-home"></i></div>
+                <span>Início</span>
+            </div>
+            <div class="menu-item" onclick="navigateTo('about')">
+                <div class="m-icon"><i class="fas fa-user-circle"></i></div>
+                <span>Sobre Mim</span>
+            </div>
+            <div class="menu-item" onclick="navigateTo('services')">
+                <div class="m-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <span>Serviços</span>
+            </div>
+            <div class="menu-item" onclick="navigateTo('contact')">
+                <div class="m-icon"><i class="fas fa-envelope"></i></div>
+                <span>Contato</span>
+            </div>
+        </div>
+        <div class="sidebar-cta">
+            <p>Pronta para ajudar no desenvolvimento do seu filho</p>
+            <a href="https://wa.me/5531983416783" target="_blank">
+                <i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp
+            </a>
         </div>
     </div>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress"></div>
-
-    <!-- Animated Background -->
-    <div class="animated-bg">
-        <div class="bg-bubble bubble-1"></div>
-        <div class="bg-bubble bubble-2"></div>
-        <div class="bg-bubble bubble-3"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
         <div class="navbar-content">
-            <div class="logo-container">
+            <div class="logo-container" onclick="navigateTo('home')">
                 <img src="larissamartins_logo.jpeg" alt="Logo" class="logo-img">
                 <div class="logo-text">
                     <h1>Larissa Martins</h1>
@@ -1189,501 +804,391 @@
                 </div>
             </div>
             <button class="menu-btn" onclick="toggleSidebar()">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </div>
     </nav>
 
-    <!-- Overlay -->
-    <div class="overlay" onclick="closeSidebar()"></div>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-content">
-            <div class="menu-item" onclick="navigateTo('home')">
-                <i class="fas fa-home"></i>
-                <span>Início</span>
-            </div>
-            <div class="menu-item" onclick="navigateTo('about')">
-                <i class="fas fa-user"></i>
-                <span>Sobre Mim</span>
-            </div>
-            <div class="menu-item" onclick="navigateTo('services')">
-                <i class="fas fa-heart"></i>
-                <span>Serviços</span>
-            </div>
-            <div class="menu-item" onclick="navigateTo('contact')">
-                <i class="fas fa-envelope"></i>
-                <span>Contato</span>
-            </div>
-            <div class="menu-item" onclick="navigateTo('blog')">
-                <i class="fas fa-blog"></i>
-                <span>Blog</span>
-            </div>
-            <div class="menu-item" onclick="navigateTo('admin')">
-                <i class="fas fa-lock"></i>
-                <span>Área Restrita</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text">
                 <div class="hero-badge">
-                    <i class="fas fa-star"></i>
-                    <span>Psicóloga Infantil</span>
+                    <i class="fas fa-circle-check"></i>
+                    Psicóloga Infantil · UFMG
                 </div>
-                <h1>Transformando <span>infâncias</span> com ciência e afeto</h1>
+                <h1>Transformando <em>infâncias</em> com ciência e afeto</h1>
                 <p class="hero-description">
-                    Psicóloga formada pela UFMG, atuando há 4 anos com o público infantil. 
+                    Psicóloga formada pela UFMG, atuando há 4 anos com o público infantil.
                     Especializada em autismo, TDAH e outras condições do neurodesenvolvimento.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fab fa-whatsapp"></i>
-                        Agendar Consulta
+                    <a href="https://wa.me/5531983416783" class="btn btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Agendar Consulta
                     </a>
-                    <a href="#services" class="btn btn-secondary">
-                        <i class="fas fa-info-circle"></i>
-                        Conheça meu trabalho
+                    <a href="#services" class="btn btn-outline">
+                        <i class="fas fa-arrow-down"></i> Conheça meu trabalho
                     </a>
                 </div>
             </div>
             <div class="hero-image">
-                <div class="image-container">
+                <div class="deco-ring deco-ring-1"></div>
+                <div class="deco-ring deco-ring-2"></div>
+                <div class="hero-photo-wrap">
                     <img src="Larissa.jpeg" alt="Larissa Martins" class="hero-photo">
-                    <div class="floating-card card-1">
-                        <i class="fas fa-heart"></i>
-                        <h4>Atendimento</h4>
-                        <p>Humanizado</p>
-                    </div>
-                    <div class="floating-card card-2">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h4>UFMG</h4>
-                        <p>Formação sólida</p>
-                    </div>
+                </div>
+                <div class="floating-card card-1">
+                    <div class="card-ic"><i class="fas fa-heart"></i></div>
+                    <div class="card-tx"><h4>Atendimento</h4><p>Humanizado</p></div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-ic"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="card-tx"><h4>UFMG</h4><p>Formação sólida</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-num">4<span>+</span></div>
+                <div class="stat-lbl">Anos de<br>Experiência</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">7</div>
+                <div class="stat-lbl">Serviços<br>Especializados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">2</div>
+                <div class="stat-lbl">Pós-Graduações<br>Concluídas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num"><span>✦</span></div>
+                <div class="stat-lbl">Baseada em<br>Evidências</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
     <section class="about" id="about">
-        <div class="section-header">
-            <span class="section-label">Trajetória</span>
-            <h2>Uma jornada dedicada ao desenvolvimento infantil</h2>
-        </div>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>Graduação em Psicologia com Ênfase em Clínica</h3>
-                    <p>Formada pela UFMG com foco em desenvolvimento infantil e neuropsicologia.</p>
-                </div>
+        <div class="about-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Trajetória</div>
+                <h2>Uma jornada dedicada ao desenvolvimento infantil</h2>
+                <p>Formação sólida e experiência prática para oferecer o melhor cuidado ao seu filho.</p>
             </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>Pós-Graduação em Desenvolvimento Infantil</h3>
-                    <p>Especialização pelo CBI of Miami, aprofundando conhecimentos em neurodesenvolvimento.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="tl-left"><div class="tl-dot"></div></div>
+                    <div class="tl-card">
+                        <h3>Graduação em Psicologia com Ênfase em Clínica</h3>
+                        <p>Formada pela UFMG com foco em desenvolvimento infantil e neuropsicologia.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>Mestrado em Psicologia, Cognição e Comportamento</h3>
-                    <p>Mestranda na UFMG, pesquisando processos cognitivos e comportamentais na infância.</p>
+                <div class="timeline-item">
+                    <div class="tl-left"><div class="tl-dot"></div></div>
+                    <div class="tl-card">
+                        <h3>Pós-Graduação em Desenvolvimento Infantil</h3>
+                        <p>Especialização pelo CBI of Miami, aprofundando conhecimentos em neurodesenvolvimento.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3>Atuação Profissional</h3>
-                    <p>Há 4 anos dedicada ao atendimento do público infantil, com abordagem baseada em evidências.</p>
+                <div class="timeline-item">
+                    <div class="tl-left"><div class="tl-dot"></div></div>
+                    <div class="tl-card">
+                        <h3>Mestrado em Psicologia, Cognição e Comportamento</h3>
+                        <p>Mestranda na UFMG, pesquisando processos cognitivos e comportamentais na infância.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="tl-left"><div class="tl-dot"></div></div>
+                    <div class="tl-card">
+                        <h3>Atuação Profissional</h3>
+                        <p>Há 4 anos dedicada ao atendimento do público infantil, com abordagem baseada em evidências.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services -->
     <section class="services" id="services">
-        <div class="section-header">
-            <span class="section-label">Serviços</span>
-            <h2>Como posso ajudar seu filho</h2>
-            <p>Atendimentos especializados para cada necessidade</p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <h3>Psicoterapia Infantil</h3>
-                <p>Atendimento individualizado para crianças, promovendo bem-estar e desenvolvimento socioemocional.</p>
+        <div class="services-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Serviços</div>
+                <h2>Como posso ajudar seu filho</h2>
+                <p>Atendimentos especializados para cada necessidade.</p>
             </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-infinity"></i>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Psicoterapia Infantil</h3>
+                    <p>Atendimento individualizado para crianças, promovendo bem-estar e desenvolvimento socioemocional.</p>
                 </div>
-                <h3>Intervenções ABA</h3>
-                <p>Programas intensivos e focais, baseados na Análise do Comportamento Aplicada, para maximizar o desenvolvimento e a aquisição de habilidades.</p>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-school"></i>
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-infinity"></i></div>
+                    <h3>Intervenções ABA</h3>
+                    <p>Programas intensivos e focais, baseados na Análise do Comportamento Aplicada, para maximizar o desenvolvimento e a aquisição de habilidades.</p>
                 </div>
-                <h3>Acompanhamento Escolar</h3>
-                <p>Suporte contínuo para favorecer a inclusão escolar, com orientação e acompanhamento da equipe pedagógica.</p>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-users"></i>
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-school"></i></div>
+                    <h3>Acompanhamento Escolar</h3>
+                    <p>Suporte contínuo para favorecer a inclusão escolar, com orientação e acompanhamento da equipe pedagógica.</p>
                 </div>
-                <h3>Orientação Parental</h3>
-                <p>Capacitação de pais e cuidadores para manejo comportamental e estimulação do desenvolvimento em casa.</p>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-clipboard-check"></i>
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-users"></i></div>
+                    <h3>Orientação Parental</h3>
+                    <p>Capacitação de pais e cuidadores para manejo comportamental e estimulação do desenvolvimento em casa.</p>
                 </div>
-                <h3>Avaliação Comportamental</h3>
-                <p>Investigação detalhada dos repertórios comportamentais, visando identificar potencialidades e dificuldades para direcionar estratégias de intervenção personalizadas.</p>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-chalkboard-teacher"></i>
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>Avaliação Comportamental</h3>
+                    <p>Investigação detalhada dos repertórios comportamentais, visando identificar potencialidades e dificuldades para direcionar estratégias personalizadas.</p>
                 </div>
-                <h3>Supervisão Técnica</h3>
-                <p>Apoio e capacitação para psicólogos formados que desejam se especializar no atendimento infantil.</p>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-building"></i>
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>Supervisão Técnica</h3>
+                    <p>Apoio e capacitação para psicólogos formados que desejam se especializar no atendimento infantil.</p>
                 </div>
-                <h3>Consultoria Institucional</h3>
-                <p>Assessoria para escolas e instituições sobre inclusão, manejo comportamental e desenvolvimento infantil.</p>
+                <div class="service-card">
+                    <div class="svc-icon"><i class="fas fa-building"></i></div>
+                    <h3>Consultoria Institucional</h3>
+                    <p>Assessoria para escolas e instituições sobre inclusão, manejo comportamental e desenvolvimento infantil.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Values Section -->
-    <section class="values" style="padding: 80px 20px; background: linear-gradient(135deg, var(--verde-claro), var(--rosa-claro)); position: relative; overflow: hidden;">
-        <div class="section-header" style="position: relative; z-index: 1;">
-            <span class="section-label" style="background: white; color: var(--verde-escuro);">Meus Valores</span>
-            <h2 style="color: white;">O que guia meu trabalho</h2>
-            <p style="color: rgba(255, 255, 255, 0.9);">Compromisso com o desenvolvimento integral de cada criança</p>
-        </div>
-        
-        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; position: relative; z-index: 1;">
-            <div style="background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 20px; text-align: center;">
-                <i class="fas fa-heart" style="font-size: 40px; color: var(--rosa-principal); margin-bottom: 20px;"></i>
-                <h3 style="color: var(--verde-escuro); margin-bottom: 10px;">Acolhimento</h3>
-                <p style="color: var(--cinza-suave);">Ambiente seguro e acolhedor para cada criança se desenvolver</p>
+    <!-- Values -->
+    <section class="values">
+        <div class="values-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Meus Valores</div>
+                <h2>O que guia meu trabalho</h2>
+                <p>Compromisso com o desenvolvimento integral de cada criança.</p>
             </div>
-            
-            <div style="background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 20px; text-align: center;">
-                <i class="fas fa-microscope" style="font-size: 40px; color: var(--verde-principal); margin-bottom: 20px;"></i>
-                <h3 style="color: var(--verde-escuro); margin-bottom: 10px;">Ciência</h3>
-                <p style="color: var(--cinza-suave);">Práticas baseadas em evidências científicas atualizadas</p>
-            </div>
-            
-            <div style="background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 20px; text-align: center;">
-                <i class="fas fa-users" style="font-size: 40px; color: var(--roxo-accent); margin-bottom: 20px;"></i>
-                <h3 style="color: var(--verde-escuro); margin-bottom: 10px;">Parceria</h3>
-                <p style="color: var(--cinza-suave);">Trabalho em conjunto com a escola, família e equipe multidisciplinar para melhores resultados</p>
-            </div>
-            
-            <div style="background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 20px; text-align: center;">
-                <i class="fas fa-star" style="font-size: 40px; color: var(--rosa-escuro); margin-bottom: 20px;"></i>
-                <h3 style="color: var(--verde-escuro); margin-bottom: 10px;">Individualidade</h3>
-                <p style="color: var(--cinza-suave);">Cada criança é única e merece um plano personalizado</p>
+            <div class="values-grid">
+                <div class="val-card">
+                    <div class="val-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Acolhimento</h3>
+                    <p>Ambiente seguro e acolhedor para cada criança se desenvolver</p>
+                </div>
+                <div class="val-card">
+                    <div class="val-icon"><i class="fas fa-microscope"></i></div>
+                    <h3>Ciência</h3>
+                    <p>Práticas baseadas em evidências científicas atualizadas</p>
+                </div>
+                <div class="val-card">
+                    <div class="val-icon"><i class="fas fa-users"></i></div>
+                    <h3>Parceria</h3>
+                    <p>Trabalho em conjunto com escola, família e equipe multidisciplinar</p>
+                </div>
+                <div class="val-card">
+                    <div class="val-icon"><i class="fas fa-star"></i></div>
+                    <h3>Individualidade</h3>
+                    <p>Cada criança é única e merece um plano personalizado</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section class="contact" id="contact">
-        <div class="section-header">
-            <span class="section-label">Contato</span>
-            <h2>Vamos conversar sobre o desenvolvimento do seu filho?</h2>
-            <p>Entre em contato para agendar uma consulta ou tirar suas dúvidas</p>
-        </div>
-        
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Vamos conversar?</h3>
-                <p>
-                    Acredito que cada criança é única e merece um atendimento personalizado. 
-                    Entre em contato para conversarmos sobre como posso ajudar no 
-                    desenvolvimento do seu filho.
-                </p>
-                
-                <div class="contact-methods">
-                    <a href="https://wa.me/5531983416783" class="contact-method" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        <div class="contact-method-info">
-                            <h4>WhatsApp</h4>
-                            <p>(31) 98341-6783</p>
-                        </div>
-                    </a>
-                    
-                    <a href="https://instagram.com/psicolarissamartins" class="contact-method" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                        <div class="contact-method-info">
-                            <h4>Instagram</h4>
-                            <p>@psicolarissamartins</p>
-                        </div>
-                    </a>
-                    
-                    <a href="mailto:larissalorenamartins@outlook.com" class="contact-method">
-                        <i class="fas fa-envelope"></i>
-                        <div class="contact-method-info">
-                            <h4>E-mail</h4>
-                            <p>larissalorenamartins@outlook.com</p>
-                        </div>
-                    </a>
-                </div>
+        <div class="contact-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Contato</div>
+                <h2>Vamos conversar sobre o desenvolvimento do seu filho?</h2>
+                <p>Entre em contato para agendar uma consulta ou tirar suas dúvidas.</p>
             </div>
-            
-            <div class="contact-form">
-                <form onsubmit="handleSubmit(event)">
-                    <div class="form-group">
-                        <label for="name">Nome Completo</label>
-                        <input type="text" id="name" class="form-control" required>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Vamos conversar?</h3>
+                    <p>Acredito que cada criança é única e merece um atendimento personalizado. Entre em contato e conversamos sobre como posso ajudar no desenvolvimento do seu filho.</p>
+                    <div class="contact-methods">
+                        <a href="https://wa.me/5531983416783" class="contact-method" target="_blank">
+                            <div class="cm-icon"><i class="fab fa-whatsapp"></i></div>
+                            <div class="cm-info"><h4>WhatsApp</h4><p>(31) 98341-6783</p></div>
+                        </a>
+                        <a href="https://instagram.com/psicolarissamartins" class="contact-method" target="_blank">
+                            <div class="cm-icon"><i class="fab fa-instagram"></i></div>
+                            <div class="cm-info"><h4>Instagram</h4><p>@psicolarissamartins</p></div>
+                        </a>
+                        <a href="mailto:larissalorenamartins@outlook.com" class="contact-method">
+                            <div class="cm-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="cm-info"><h4>E-mail</h4><p>larissalorenamartins@outlook.com</p></div>
+                        </a>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Telefone</label>
-                        <input type="tel" id="phone" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Mensagem</label>
-                        <textarea id="message" class="form-control" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit">
-                        Enviar Mensagem
-                    </button>
-                </form>
+                </div>
+                <div class="contact-form">
+                    <h3>Envie uma mensagem</h3>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Nome Completo</label>
+                            <input type="text" id="name" class="form-control" placeholder="Seu nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefone / WhatsApp</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="(31) 00000-0000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensagem</label>
+                            <textarea id="message" class="form-control" placeholder="Como posso ajudar?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            <i class="fab fa-whatsapp"></i> Enviar pelo WhatsApp
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+        <div class="cta-inner reveal">
+            <h2>Pronta para ajudar no desenvolvimento do seu filho</h2>
+            <p>Agende uma consulta agora mesmo e dê o primeiro passo para um futuro mais feliz e saudável para sua família.</p>
+            <a href="https://wa.me/5531983416783" class="btn btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp
+            </a>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <img src="larissamartins_logo.jpeg" alt="Logo" class="logo-img">
-            <p class="footer-text">Transformando vidas através da psicologia infantil</p>
-            
-            <div class="footer-links">
-                <a href="https://wa.me/5531983416783" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://instagram.com/psicolarissamartins" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:larissalorenamartins@outlook.com">
-                    <i class="fas fa-envelope"></i>
-                </a>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <img src="larissamartins_logo.jpeg" alt="Logo">
+                <h3>Larissa Martins</h3>
+                <p>Psicóloga Infantil especializada em autismo, TDAH e neurodesenvolvimento. Atendimento humanizado e baseado em evidências.</p>
+                <div class="footer-socials">
+                    <a href="https://wa.me/5531983416783" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://instagram.com/psicolarissamartins" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:larissalorenamartins@outlook.com"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
-            
-            <div class="footer-copy">
-                <p>&copy; 2025 Larissa Martins - Psicóloga Infantil | CRP 04/74633</p>
-                <p>Todos os direitos reservados</p>
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="#home" onclick="navigateTo('home')">Início</a></li>
+                    <li><a href="#about" onclick="navigateTo('about')">Sobre Mim</a></li>
+                    <li><a href="#services" onclick="navigateTo('services')">Serviços</a></li>
+                    <li><a href="#contact" onclick="navigateTo('contact')">Contato</a></li>
+                </ul>
             </div>
+            <div class="footer-col">
+                <h4>Serviços</h4>
+                <ul>
+                    <li><a href="#services">Psicoterapia Infantil</a></li>
+                    <li><a href="#services">Intervenções ABA</a></li>
+                    <li><a href="#services">Acompanhamento Escolar</a></li>
+                    <li><a href="#services">Orientação Parental</a></li>
+                    <li><a href="#services">Avaliação Comportamental</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Larissa Martins — Todos os direitos reservados</p>
+            <span class="footer-crp"><i class="fas fa-shield-alt"></i> CRP 04/74633</span>
         </div>
     </footer>
 
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/5531983416783" class="wa-float" target="_blank" title="Fale pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <!-- Back to Top -->
-    <div class="back-to-top" onclick="scrollToTop()">
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
         <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
-        // Loading Screen
+        // Loading
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.loading-screen').classList.add('hidden');
-            }, 1500);
+            setTimeout(() => document.getElementById('loading').classList.add('hidden'), 1500);
         });
 
-        // Custom Cursor
+        // Cursor
         const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-
-        document.addEventListener('mousemove', (e) => {
+        const follower = document.querySelector('.cursor-follower');
+        document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            
             setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 100);
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 80);
         });
-
-        document.querySelectorAll('a, button').forEach(el => {
+        document.querySelectorAll('a, button, .menu-item').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // Navbar Scroll Effect
+        // Scroll effects
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-            
-            // Scroll Progress
-            const scrollProgress = document.querySelector('.scroll-progress');
-            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (window.scrollY / scrollHeight) * 100;
-            scrollProgress.style.width = scrollPercent + '%';
-            
-            // Back to Top
-            const backToTop = document.querySelector('.back-to-top');
-            if (window.scrollY > 300) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
+            const scrollY = window.scrollY;
+            // navbar
+            document.getElementById('navbar').classList.toggle('scrolled', scrollY > 40);
+            // progress
+            const prog = (scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scrollProg').style.width = prog + '%';
+            // back to top
+            document.getElementById('backToTop').classList.toggle('show', scrollY > 400);
         });
 
-        // Sidebar Toggle
+        // Sidebar
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.querySelector('.overlay');
-            const menuBtn = document.querySelector('.menu-btn');
-            
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            menuBtn.classList.toggle('active');
+            document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+            document.querySelector('.menu-btn').classList.toggle('active');
         }
-
         function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.querySelector('.overlay');
-            const menuBtn = document.querySelector('.menu-btn');
-            
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            menuBtn.classList.remove('active');
+            document.getElementById('sidebar').classList.remove('active');
+            document.querySelector('.overlay').classList.remove('active');
+            document.querySelector('.menu-btn').classList.remove('active');
         }
-
-        function navigateTo(section) {
+        function navigateTo(id) {
             closeSidebar();
-            if (section === 'admin') {
-                alert('Área restrita - Em desenvolvimento');
-                return;
-            }
-            const element = document.getElementById(section);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // Smooth scroll anchors
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
             });
         });
 
-        // Back to Top
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        // Timeline Animation
-        const observerOptions = {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
+        // Intersection Observer
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('show', 'visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            observer.observe(item);
+        document.querySelectorAll('.timeline-item, .service-card, .contact-method, .reveal').forEach(el => io.observe(el));
+
+        // Stagger service cards
+        document.querySelectorAll('.service-card').forEach((c, i) => {
+            c.style.transitionDelay = (i * 0.07) + 's';
         });
 
-        // Form Handler
-        function handleSubmit(event) {
-            event.preventDefault();
+        // Form → WhatsApp
+        function handleSubmit(e) {
+            e.preventDefault();
             const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const message = document.getElementById('message').value;
-            
-            // WhatsApp message
-            const whatsappMessage = `Olá! Meu nome é ${name}. ${message}`;
-            const whatsappUrl = `https://wa.me/5531983416783?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            window.open(whatsappUrl, '_blank');
+            const msg = document.getElementById('message').value;
+            const text = `Olá! Meu nome é ${name}. ${msg}`;
+            window.open(`https://wa.me/5531983416783?text=${encodeURIComponent(text)}`, '_blank');
         }
-
-        // Parallax Effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.bg-bubble');
-            
-            parallaxElements.forEach((el, index) => {
-                const speed = 0.5 + (index * 0.2);
-                el.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Service Cards Animation
-        document.querySelectorAll('.service-card').forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-        });
-
-        // Add Animation Class on Scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.service-card, .contact-method');
-            
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementBottom = element.getBoundingClientRect().bottom;
-                
-                if (elementTop < window.innerHeight && elementBottom > 0) {
-                    element.classList.add('visible');
-                }
-            });
-        };
-
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll();
     </script>
 </body>
 </html>
